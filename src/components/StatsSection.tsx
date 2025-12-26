@@ -1,7 +1,9 @@
+import { AnimatedCounter } from "./AnimatedCounter";
+
 const stats = [
-  { value: "80K+", label: "Active Wallets" },
-  { value: "150+", label: "Partner Integrations" },
-  { value: "$25M+", label: "Transactions Processed" },
+  { value: 80, suffix: "K+", label: "Active Wallets" },
+  { value: 150, suffix: "+", label: "Partner Integrations" },
+  { prefix: "$", value: 25, suffix: "M+", label: "Transactions Processed" },
 ];
 
 export const StatsSection = () => {
@@ -16,7 +18,12 @@ export const StatsSection = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="font-heading text-3xl lg:text-4xl font-bold text-primary mb-1">
-                {stat.value}
+                <AnimatedCounter
+                  end={stat.value}
+                  prefix={stat.prefix}
+                  suffix={stat.suffix}
+                  duration={2000}
+                />
               </div>
               <div className="text-sm text-muted-foreground">{stat.label}</div>
             </div>
