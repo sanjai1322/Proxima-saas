@@ -23,15 +23,27 @@ const Index = () => {
       </Helmet>
       <div className="min-h-screen bg-background">
         <Navbar />
-        <main>
-          <HeroSection />
+        <main className="scroll-smooth">
+          <section id="home">
+            <HeroSection />
+          </section>
           <PartnersSection />
-          <FeaturesSection />
-          <UseCasesSection />
-          <MissionSection />
+          <section id="features">
+            <FeaturesSection />
+          </section>
+          <section id="use-cases">
+            <UseCasesSection />
+          </section>
+          <section id="mission">
+            <MissionSection />
+          </section>
           <StatsSection />
-          <RoadmapSection />
-          <PricingSection />
+          <section id="roadmap">
+            <RoadmapSection />
+          </section>
+          <section id="pricing">
+            <PricingSection />
+          </section>
           <CTASection />
         </main>
         <Footer />
