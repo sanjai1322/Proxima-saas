@@ -3,13 +3,22 @@ import { Hexagon, Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
-  { name: "Home", href: "#" },
-  { name: "Products", href: "#products" },
-  { name: "Ecosystem", href: "#ecosystem" },
+  { name: "Home", href: "#home" },
+  { name: "Products", href: "#features" },
+  { name: "Ecosystem", href: "#use-cases" },
   { name: "Pricing", href: "#pricing" },
-  { name: "Docs", href: "#docs" },
-  { name: "About", href: "#about" },
+  { name: "Roadmap", href: "#roadmap" },
+  { name: "About", href: "#mission" },
 ];
+
+const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  e.preventDefault();
+  const targetId = href.replace("#", "");
+  const element = document.getElementById(targetId);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,7 +28,11 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <a 
+            href="#home" 
+            onClick={(e) => scrollToSection(e, "#home")}
+            className="flex items-center gap-2 group"
+          >
             <div className="relative">
               <Hexagon className="w-8 h-8 text-primary icon-glow transition-transform group-hover:scale-110" />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -37,6 +50,7 @@ export const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 {link.name}
@@ -69,7 +83,10 @@ export const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    scrollToSection(e, link.href);
+                    setMobileMenuOpen(false);
+                  }}
                 >
                   {link.name}
                 </a>
