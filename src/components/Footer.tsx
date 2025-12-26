@@ -1,87 +1,122 @@
-import { Hexagon } from "lucide-react";
+import { Hexagon, Twitter, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const footerLinks = {
   product: [
-    { name: "Ecosystem", href: "#" },
-    { name: "Developers", href: "#" },
-    { name: "Pricing", href: "#" },
+    { name: "Ecosystem", href: "#use-cases" },
+    { name: "Developers", href: "#features" },
+    { name: "Pricing", href: "#pricing" },
   ],
   company: [
     { name: "Careers", href: "#" },
     { name: "Privacy Policy", href: "#" },
+    { name: "Terms of Service", href: "#" },
   ],
 };
 
 export const Footer = () => {
   return (
-    <footer className="py-12 lg:py-16 border-t border-border/50">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Top Section */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12">
-          {/* Left - Logo and Tagline */}
-          <div className="max-w-md">
-            <a href="#" className="flex items-center gap-2 mb-4">
+    <footer className="relative py-20 lg:py-24 border-t border-white/5 overflow-hidden bg-background">
+      {/* Background Decorative Element */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+
+      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+          {/* Brand Column */}
+          <div className="lg:col-span-5">
+            <a href="#home" className="flex items-center gap-2 mb-6 group w-fit">
               <div className="relative">
-                <Hexagon className="w-8 h-8 text-primary icon-glow" />
+                <Hexagon className="w-10 h-10 text-primary shadow-primary/50 transition-transform group-hover:scale-110" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-2 h-2 bg-primary rounded-full" />
+                  <div className="w-2.5 h-2.5 bg-primary rounded-full animate-pulse" />
                 </div>
               </div>
-              <span className="font-heading font-bold text-xl text-foreground">
+              <span className="font-heading font-bold text-2xl text-foreground tracking-tight">
                 Proxima
               </span>
             </a>
-            <p className="text-sm text-muted-foreground">
-              Proxima is bridging the gap between Web2 and Web3 infrastructure for a decentralized tomorrow.
+            <p className="text-muted-foreground text-lg max-w-sm leading-relaxed mb-8">
+              Building the next generation of secure, scalable, and ultra-fast Web3 infrastructure.
             </p>
+            <div className="flex items-center gap-4">
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                href="#"
+                className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300"
+              >
+                <Twitter className="w-5 h-5" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                href="#"
+                className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300"
+              >
+                <Github className="w-5 h-5" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1, y: -2 }}
+                href="#"
+                className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300"
+              >
+                <Linkedin className="w-5 h-5" />
+              </motion.a>
+            </div>
           </div>
 
-          {/* Right - Email CTA */}
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">designernationchoose@gmail.com</span>
-            <Button variant="nav" size="sm">
-              Try Now
+          {/* Links Column 1 */}
+          <div className="lg:col-span-2 lg:col-start-7">
+            <h4 className="font-heading font-bold text-sm uppercase tracking-widest text-foreground mb-6">Product</h4>
+            <ul className="space-y-4">
+              {footerLinks.product.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-muted-foreground hover:text-primary transition-all duration-300 flex items-center group">
+                    <span className="w-0 group-hover:w-2 h-px bg-primary mr-0 group-hover:mr-2 transition-all duration-300" />
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Links Column 2 */}
+          <div className="lg:col-span-2">
+            <h4 className="font-heading font-bold text-sm uppercase tracking-widest text-foreground mb-6">Company</h4>
+            <ul className="space-y-4">
+              {footerLinks.company.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-muted-foreground hover:text-primary transition-all duration-300 flex items-center group">
+                    <span className="w-0 group-hover:w-2 h-px bg-primary mr-0 group-hover:mr-2 transition-all duration-300" />
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter Column */}
+          <div className="lg:col-span-2">
+            <h4 className="font-heading font-bold text-sm uppercase tracking-widest text-foreground mb-6">Connect</h4>
+            <Button variant="outline" size="sm" className="w-full mb-4 group h-11 border-white/10 hover:border-primary/50 rounded-xl bg-white/5">
+              <Mail className="w-4 h-4 mr-2 group-hover:text-primary" />
+              Email Us
             </Button>
+            <p className="text-[10px] text-muted-foreground uppercase tracking-tighter text-center">
+              Response within 24 hours
+            </p>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-8 border-t border-border/50">
-          {/* Links */}
-          <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
-            {footerLinks.product.map((link) => (
-              <a key={link.name} href={link.href} className="hover:text-foreground transition-colors">
-                {link.name}
-              </a>
-            ))}
-            {footerLinks.company.map((link) => (
-              <a key={link.name} href={link.href} className="hover:text-foreground transition-colors">
-                {link.name}
-              </a>
-            ))}
-          </div>
-
-          {/* Social Icons */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">Follow us</span>
-            <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-secondary/80 transition-all">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-secondary/80 transition-all">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-              </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-secondary/80 transition-all">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-                </svg>
-              </a>
-            </div>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-sm text-muted-foreground">
+            © 2024 Proxima Protocol. All rights reserved.
+          </p>
+          <div className="flex items-center gap-8 text-sm text-muted-foreground">
+            <span className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              Mainnet Active
+            </span>
           </div>
         </div>
       </div>

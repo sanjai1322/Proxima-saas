@@ -1,4 +1,6 @@
 import { Check, Clock, Rocket } from "lucide-react";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useRef } from "react";
 
 const roadmapItems = [
   {
@@ -65,116 +67,142 @@ const getStatusIcon = (status: string) => {
 const getStatusStyles = (status: string) => {
   switch (status) {
     case "completed":
-      return "bg-primary/20 text-primary border-primary/50";
+      return "bg-primary/20 text-primary border-primary/50 shadow-[0_0_10px_rgba(var(--primary),0.3)]";
     case "current":
-      return "bg-primary text-primary-foreground border-primary animate-pulse";
+      return "bg-primary text-primary-foreground border-primary shadow-[0_0_20px_rgba(var(--primary),0.5)]";
     default:
-      return "bg-secondary text-muted-foreground border-border";
+      return "bg-secondary/50 text-muted-foreground border-border";
   }
 };
 
 export const RoadmapSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   return (
-    <section className="py-20 lg:py-32 relative overflow-hidden">
+    <section ref={containerRef} className="py-24 lg:py-36 relative overflow-hidden">
       {/* Background Effects */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
-      <div className="absolute top-1/2 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/10 rounded-full blur-[128px] -translate-y-1/2 -z-10" />
+      <div className="absolute top-1/2 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[128px] -translate-y-1/2 -z-10" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium mb-6">
-            Roadmap
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-semibold uppercase tracking-widest mb-6">
+            Future Roadmap
           </span>
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Our Journey to
             <br />
             <span className="text-gradient">Decentralization</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Follow our progress as we build the future of Web3 infrastructure
           </p>
-        </div>
+        </motion.div>
 
         {/* Timeline */}
         <div className="relative">
           {/* Timeline Line - Desktop */}
-          <div className="hidden lg:block absolute top-[60px] left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-border to-transparent" />
+          <div className="hidden lg:block absolute top-[60px] left-0 right-0 h-1 bg-white/5 overflow-hidden">
+            <motion.div
+              className="h-full bg-primary shadow-[0_0_15px_rgba(var(--primary),0.8)]"
+              style={{ scaleX }}
+            />
+          </div>
 
           {/* Roadmap Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
             {roadmapItems.map((item, index) => (
-              <div
+              <motion.div
                 key={item.phase}
-                className="relative animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="relative"
               >
                 {/* Timeline Node - Desktop */}
-                <div className="hidden lg:flex justify-center mb-6">
-                  <div
-                    className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${getStatusStyles(
+                <div className="hidden lg:flex justify-center mb-8">
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    className={`w-14 h-14 rounded-full border-2 flex items-center justify-center transition-all ${getStatusStyles(
                       item.status
                     )}`}
                   >
                     {getStatusIcon(item.status)}
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Card */}
-                <div className="gradient-border rounded-2xl p-6 h-full hover:border-primary/50 transition-all duration-300 group">
+                <div className="glass-card rounded-3xl p-8 h-full group">
                   {/* Mobile Timeline Node */}
-                  <div className="flex lg:hidden items-center gap-3 mb-4">
+                  <div className="flex lg:hidden items-center gap-4 mb-6">
                     <div
-                      className={`w-10 h-10 rounded-full border-2 flex items-center justify-center ${getStatusStyles(
+                      className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${getStatusStyles(
                         item.status
                       )}`}
                     >
                       {getStatusIcon(item.status)}
                     </div>
                     <div>
-                      <span className="text-xs text-primary font-medium uppercase tracking-wider">
+                      <span className="text-xs text-primary font-bold uppercase tracking-widest">
                         {item.phase}
                       </span>
-                      <p className="text-sm text-muted-foreground">{item.quarter}</p>
+                      <p className="text-sm font-medium text-muted-foreground">{item.quarter}</p>
                     </div>
                   </div>
 
                   {/* Desktop Phase & Quarter */}
-                  <div className="hidden lg:block mb-4">
-                    <span className="text-xs text-primary font-medium uppercase tracking-wider">
+                  <div className="hidden lg:block mb-6">
+                    <span className="text-xs text-primary font-bold uppercase tracking-widest">
                       {item.phase}
                     </span>
-                    <p className="text-sm text-muted-foreground">{item.quarter}</p>
+                    <p className="text-sm font-medium text-muted-foreground">{item.quarter}</p>
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-heading font-semibold text-lg text-foreground mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="font-heading font-bold text-xl text-foreground mb-5 group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
 
                   {/* Items */}
-                  <ul className="space-y-2">
+                  <ul className="space-y-3 mb-8">
                     {item.items.map((listItem) => (
                       <li
                         key={listItem}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                        className="flex items-start gap-3 text-sm text-muted-foreground"
                       >
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-1.5 flex-shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0" />
                         {listItem}
                       </li>
                     ))}
                   </ul>
 
                   {/* Status Badge */}
-                  <div className="mt-4 pt-4 border-t border-border/50">
+                  <div className="mt-auto pt-6 border-t border-white/5">
                     <span
-                      className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${
-                        item.status === "completed"
+                      className={`inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider ${item.status === "completed"
                           ? "bg-primary/10 text-primary"
                           : item.status === "current"
-                          ? "bg-primary/20 text-primary"
-                          : "bg-secondary text-muted-foreground"
-                      }`}
+                            ? "bg-primary text-primary-foreground animate-pulse"
+                            : "bg-white/5 text-muted-foreground"
+                        }`}
                     >
                       {item.status === "completed" && "Completed"}
                       {item.status === "current" && "In Progress"}
@@ -182,7 +210,7 @@ export const RoadmapSection = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

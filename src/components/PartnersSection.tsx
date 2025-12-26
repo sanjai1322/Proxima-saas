@@ -1,32 +1,26 @@
 const partners = [
+  { name: "FTX", logo: "FTX" },
   { name: "Binance", logo: "BINANCE" },
-  { name: "Ethereum", logo: "ETHEREUM" },
-  { name: "Polygon", logo: "POLYGON" },
-  { name: "Arbitrum", logo: "ARBITRUM" },
+  { name: "Litecoin", logo: "LITECOIN" },
 ];
 
 export const PartnersSection = () => {
   return (
-    <section className="py-16 lg:py-20 border-t border-b border-border/30">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center mb-10">
-          <p className="text-sm text-muted-foreground uppercase tracking-wider">
-            Backed by <span className="text-primary font-medium">Builders & Innovators</span>
-          </p>
-        </div>
+    <section className="py-24 border-y border-white/5 bg-background/50">
+      <div className="container mx-auto px-4 lg:px-8 text-center">
+        <h3 className="text-xl md:text-2xl font-heading font-black text-primary uppercase tracking-[0.2em] mb-16">
+          Backed by <span className="text-foreground">Builders & Innovators</span>
+        </h3>
 
         {/* Partners Grid */}
-        <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16">
+        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60">
           {partners.map((partner, index) => (
             <div
               key={partner.name}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="group flex items-center gap-3 transition-all duration-300 hover:opacity-100 hover:scale-110"
             >
-              <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center">
-                <div className="w-4 h-4 bg-primary/50 rounded" />
-              </div>
-              <span className="font-heading font-semibold text-sm tracking-wider">
+              <div className="w-2 h-2 rotate-45 bg-primary shadow-[0_0_10px_rgba(var(--primary),0.8)]" />
+              <span className="font-heading font-black text-2xl lg:text-3xl tracking-tighter text-foreground group-hover:text-primary transition-colors">
                 {partner.logo}
               </span>
             </div>
